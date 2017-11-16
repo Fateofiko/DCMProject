@@ -5,8 +5,21 @@
 	<persistence-unit name="dcm-persistence"
 		transaction-type="RESOURCE_LOCAL">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<class>net.cb.dcm.jpa.entities.Property</class>
+		<class>net.cb.dcm.jpa.entities.DevicePropertyType</class>
 		<class>net.cb.dcm.jpa.entities.Device</class>
+		<class>net.cb.dcm.jpa.entities.DevicePropTypePropRelation</class>
+		<class>net.cb.dcm.jpa.entities.DeviceStatus</class>
+		<class>net.cb.dcm.jpa.entities.DeviceStatusValue</class>
 		<class>net.cb.dcm.jpa.entities.Tag</class>
+		<class>net.cb.dcm.jpa.entities.MediaContent</class>
+		<class>net.cb.dcm.jpa.entities.DeviceTagRelation</class>
+		<class>net.cb.dcm.jpa.entities.MediaContentTagRelation</class>
+		<class>net.cb.dcm.jpa.entities.Playlist</class>
+		<class>net.cb.dcm.jpa.entities.PlaylistMediaContentRelation</class>
+		<class>net.cb.dcm.jpa.entities.Loop</class>
+		<class>net.cb.dcm.jpa.entities.DeviceSchedule</class>
+		<class>net.cb.dcm.jpa.entities.LoopMediaContentRelation</class>
 		<properties>
 			<property name="eclipselink.ddl-generation" value="create-tables" />
 		</properties>

@@ -7,6 +7,6 @@ import javax.persistence.Id;
 //@Entity
 public class Layout {
 //	@Id
-//	@GeneratedValue
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id; 
 }

@@ -3,43 +3,29 @@ package net.cb.dcm.jpa.entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-//@Entity
-//@Table(name="dev_tag_rel")
+/**
+ * Entity for relation between {@link Device} and {@link Tag}
+ * It's used only for proper database table generation.
+ * Instead use directly {@link Device#getTags()}
+ */
+@Entity
+@Table(name="dev_tag_rel")
 public class DeviceTagRelation {
 	
-	
-//	@Id
-//	@GeneratedValue
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-//	@Column(name="device_id")
+	@Column(name = "DEVICE_ID")
 	private long deviceId;
 	
-//	@Column(name="tag_id")
+	@Column(name = "TAG_ID")
 	private long tagId;
-	
-//	@ManyToOne
-//	@PrimaryKeyJoinColumn(name="DEVICEID", referencedColumnName="ID")
-	/* if this JPA model doesn't create a table for the "PROJ_EMP" entity,
-	 * please comment out the @PrimaryKeyJoinColumn, and use the ff:
-	 *  @JoinColumn(name = "deviceId", updatable = false, insertable = false)
-	 * or @JoinColumn(name = "deviceId", updatable = false, insertable = false, referencedColumnName = "id")
-	*/
-	private Device device;
-	
-//	@ManyToOne
-//	@PrimaryKeyJoinColumn(name="TAGID", referencedColumnName="ID")
-	/* if this JPA model doesn't create a table for the "PROJ_DeviceTagRelation" entity,
-	 * please comment out the @PrimaryKeyJoinColumn, and use the ff:
-	 *  @JoinColumn(name = "tagId", updatable = false, insertable = false)
-	 * or @JoinColumn(name = "tagId", updatable = false, insertable = false, referencedColumnName = "id")
-	*/
-	private Tag tag;
+
 
 	public long getId() {
 		return id;
@@ -65,19 +51,4 @@ public class DeviceTagRelation {
 		this.tagId = tagId;
 	}
 
-	public Device getDevice() {
-		return device;
-	}
-
-	public void setDevice(Device device) {
-		this.device = device;
-	}
-
-	public Tag getTag() {
-		return tag;
-	}
-
-	public void setTag(Tag tag) {
-		this.tag = tag;
-	}
 }

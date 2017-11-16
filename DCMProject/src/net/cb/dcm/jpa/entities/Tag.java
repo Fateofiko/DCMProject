@@ -1,21 +1,19 @@
 package net.cb.dcm.jpa.entities;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "TAGS")
+@Table(name = "tags")
 @NamedQuery(name = "AllTags", query = "select t from Tag t")
 public class Tag {
 	@Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 	
     @Column(unique=true, length=30)
@@ -23,6 +21,7 @@ public class Tag {
  
     @Column(length=250)
     private String description;
+    
 	private boolean system;
 	
 //	@OneToMany(mappedBy="tag")

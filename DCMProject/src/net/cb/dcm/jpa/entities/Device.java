@@ -1,20 +1,33 @@
 package net.cb.dcm.jpa.entities;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import net.cb.dcm.enums.DeviceType;
 
+/**
+ * Entity class for Device 
+ *
+ */
 @Entity
-@Table(name = "Devices")
+@Table(name = "devices")
 @NamedQuery(name = "AllDevices", query = "select d from Device d")
 public class Device {
+	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
 	@Column(length = 30)
@@ -23,7 +36,7 @@ public class Device {
 	@Column(length = 250)
 	private String description;
 
-	@Column(name = "DEV_TYPE")
+	@Column(name = "dev_type")
 	private DeviceType devType; // (integer) � device type (1 � monitor, 2 � mobile
 							// device, 3�)
 
@@ -34,9 +47,27 @@ public class Device {
 
 	@Column(length = 40, unique = true, nullable = false)
 	private String ip;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "DEV_PROP_TYPE_ID", referencedColumnName = "ID")
+	private DevicePropertyType devicePropertyType;
 
 //	@OneToMany(mappedBy = "device")
 //	private List<DeviceTagRelation> tags;
+	
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "dev_tag_rel", 
+		joinColumns = @JoinColumn(name = "DEVICE_ID", referencedColumnName = "ID"), 
+		inverseJoinColumns = @JoinColumn(name = "TAG_ID", referencedColumnName = "ID"))
+	private List<Tag> tags;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "CURR_DEV_STATUS_ID", referencedColumnName = "ID")
+	private DeviceStatus currentDeviceStatus;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "CURR_DEV_SCHEDULE_ID", referencedColumnName = "ID")
+	private DeviceSchedule currentDeviceSchedule;
 
 	public long getId() {
 		return id;
@@ -107,5 +138,59 @@ public class Device {
 
 	public void setIp(String ip) {
 		this.ip = ip;
+	}
+
+	public DevicePropertyType getDevicePropertyType() {
+		return devicePropertyType;
+	}
+
+	public void setDevicePropertyType(DevicePropertyType devicePropertyType) {
+		this.devicePropertyType = devicePropertyType;
+	}
+
+	public List<Tag> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<Tag> tags) {
+		this.tags = tags;
+	}
+
+	public DeviceStatus getCurrentDeviceStatus() {
+		return currentDeviceStatus;
+	}
+
+	public void setCurrentDeviceStatus(DeviceStatus currentDeviceStatus) {
+		this.currentDeviceStatus = currentDeviceStatus;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Device other = (Device) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+
+	public DeviceSchedule getCurrentDeviceSchedule() {
+		return currentDeviceSchedule;
+	}
+
+	public void setCurrentDeviceSchedule(DeviceSchedule currentDeviceSchedule) {
+		this.currentDeviceSchedule = currentDeviceSchedule;
 	}
 }
